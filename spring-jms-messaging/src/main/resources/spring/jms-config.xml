@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+	<!-- Infrastructure -->
+	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="vm://embedded?broker.persistent=false" />
+		<property name="sendTimeout" value="5000"/>
+	</bean>
+
+	<bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+		<property name="targetConnectionFactory" ref="connectionFactory" />
+	</bean>
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="cachingConnectionFactory" />
+		<property name="defaultDestination" ref="syncQueue" />
+	</bean>
+
+	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="cachingConnectionFactory" />
+		<property name="pubSubDomain" value="true" />
+	</bean>
+
+
+	<!-- Destinations (queues and topics) -->
+	<bean id="syncQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="sync.queue" />
+	</bean>
+	<bean id="asyncQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="async.queue" />
+	</bean>
+	<bean id="oneTopic" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="one.topic" />
+	</bean>
+
+
+	<!-- Listeners -->
+	<jms:listener-container connection-factory="connectionFactory" acknowledge="transacted">
+		<jms:listener ref="jmsAsyncListener" destination="async.queue" />
+	</jms:listener-container>
+	<jms:listener-container connection-factory="connectionFactory" destination-type="topic">
+		<jms:listener ref="jmsAsyncListener" destination="one.topic"  />
+		<jms:listener ref="jmsAsyncListener" destination="one.topic"  />
+		<jms:listener ref="jmsAsyncListener" destination="one.topic"  />
+     </jms:listener-container>
+
+</beans>
