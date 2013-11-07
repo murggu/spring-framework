@@ -10,7 +10,7 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-public final class WordCounterBolt extends BaseBasicBolt {
+public class WordCounterBolt extends BaseBasicBolt {
 
 	private static final long serialVersionUID = 3299215114280078142L;
 	

@@ -11,7 +11,7 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
-public final class WordGeneratorSpout extends BaseRichSpout {
+public class WordGeneratorSpout extends BaseRichSpout {
 
 	private static final long serialVersionUID = 4108189884021479989L;
 	private static final String[] words = new String[] {
