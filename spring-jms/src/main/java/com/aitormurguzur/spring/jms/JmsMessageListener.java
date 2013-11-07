@@ -25,7 +25,6 @@ public class JmsMessageListener implements MessageListener {
 		try {
 			SampleMessage sampleMessage = (SampleMessage) ((ObjectMessage) message).getObject();
 			logger.info("Received message {id:{}, message:{}}", sampleMessage.getId(), sampleMessage.getMessage());
-
 			saveToBD(sampleMessage);
 		} catch (JMSException e) {
 			throw JmsUtils.convertJmsAccessException(e);
