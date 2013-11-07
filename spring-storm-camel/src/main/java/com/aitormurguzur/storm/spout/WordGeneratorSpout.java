@@ -16,7 +16,7 @@ public class WordGeneratorSpout extends BaseRichSpout {
 	private static final long serialVersionUID = 4108189884021479989L;
 	private static final String[] words = new String[] {
 		"Forrest", "Roy", "Sherry", "Kirk", "Gwendolyn", "Holly", 
-		"Darin", "Jennifer", "Lisa", "Bruce", "Geoffrey"};
+		"Darin", "Jennifer", "Lisa", "Bruce", "Geoffrey", "Janis"};
 	
 	private SpoutOutputCollector _collector;
 	private Random _random;
