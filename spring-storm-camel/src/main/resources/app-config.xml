@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.5.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.9.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- Camel route builders -->
+	<context:component-scan base-package="com.aitormurguzur.storm.camel"/>
+	
+	<camel:camelContext id="camel" trace="false">
+		<camel:routeBuilder ref="defaultRoute" />
+	</camel:camelContext>
+	
+	<bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent" depends-on="broker">
+		<property name="brokerURL" value="vm://myBroker?create=false&amp;waitForStart=5000" />
+	</bean>
+	
+	<!-- ActiveMQ broker -->
+	<amq:broker id="broker" useJmx="true" persistent="false" brokerName="myBroker" useShutdownHook="false">
+		<amq:transportConnectors>
+			<amq:transportConnector name="vm" uri="vm://myBroker" />
+		</amq:transportConnectors>
+	</amq:broker>
+	
+	<amq:queue id="notificationQueue" physicalName="my-queue" />
+	<amq:topic id="notificationTopic" physicalName="my-topic" />
+	
+	<amq:connectionFactory id="jmsConnectionFactory" brokerURL="vm://myBroker" />
+
+</beans>
