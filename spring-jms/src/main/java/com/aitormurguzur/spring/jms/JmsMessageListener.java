@@ -17,24 +17,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class JmsMessageListener implements MessageListener {
 
 	private static Logger logger = LoggerFactory.getLogger(JmsMessageListener.class);
-	
+
 	@Autowired
-    private JdbcTemplate jdbcTemplate;
-	 
+	private JdbcTemplate jdbcTemplate;
+
 	public void onMessage(Message message) {
 		try {
 			SampleMessage sampleMessage = (SampleMessage) ((ObjectMessage) message).getObject();
 			logger.info("Received message {id:{}, message:{}}", sampleMessage.getId(), sampleMessage.getMessage());
-			
+
 			saveToBD(sampleMessage);
 		} catch (JMSException e) {
 			throw JmsUtils.convertJmsAccessException(e);
 		}
 	}
-	
+
 	@Transactional
-    private void saveToBD(SampleMessage sampleMessage) {
-            String query = "insert into JMSMESSAGES(id, message) values (?,?)";
-            jdbcTemplate.update(query, sampleMessage.getId(), sampleMessage.getMessage());
-    }
+	private void saveToBD(SampleMessage sampleMessage) {
+		String query = "insert into JMSMESSAGES(id, message) values (?,?)";
+		jdbcTemplate.update(query, sampleMessage.getId(), sampleMessage.getMessage());
+	}
 }
