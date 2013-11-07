@@ -22,7 +22,7 @@ import com.aitormurguzur.spring.jms.tx.JmsMessageProducer;
 public class TestJmsMessaging {
 
 	protected static final String QUEUE_INCOMING = "incoming.queue";
-    protected static final String QUEUE_DLQ = "ActiveMQ.DLQ";
+	protected static final String QUEUE_DLQ = "ActiveMQ.DLQ";
     
 	@Autowired
 	protected JdbcTemplate jdbcTemplate;
