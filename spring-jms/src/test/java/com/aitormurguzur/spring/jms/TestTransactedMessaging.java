@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.aitormurguzur.spring.jms.SampleMessage;
+
 /**
  * Tests JMS using local transactions
  * @author amurguzur
