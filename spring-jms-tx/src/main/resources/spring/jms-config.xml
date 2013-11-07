@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Infrastructure (using local JMS transactions) -->
+	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="vm://embedded?broker.persistent=false" />
+		<property name="redeliveryPolicy">
+			<!-- The number of re-deliveries should be made in case of a rollback -->
+			<bean class="org.apache.activemq.RedeliveryPolicy">
+				<property name="maximumRedeliveries" value="3" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="cachingConnectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory">
+		<property name="targetConnectionFactory" ref="connectionFactory" />
+	</bean>
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="cachingConnectionFactory" />
+		<property name="defaultDestination" ref="incomingQueue" />
+	</bean>
+
+
+	<!-- Destinations -->
+	<bean id="incomingQueue" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="incoming.queue" />
+	</bean>
+
+
+	<!-- Listeners (will be executed within a local JMS transaction)-->
+	<jms:listener-container connection-factory="connectionFactory" acknowledge="transacted">
+		<jms:listener ref="jmsMessageListener" destination="incoming.queue" />
+	</jms:listener-container>
+
+</beans>
