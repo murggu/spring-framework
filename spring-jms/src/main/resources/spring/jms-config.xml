@@ -4,12 +4,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<!-- Infrastructure -->
+	<!-- Infrastructure (using local JMS transactions) -->
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="vm://embedded?broker.persistent=false" />
 		<property name="redeliveryPolicy">
+			<!-- The number of re-deliveries should be made in case of a rollback -->
 			<bean class="org.apache.activemq.RedeliveryPolicy">
-				<property name="maximumRedeliveries" value="4" />
+				<property name="maximumRedeliveries" value="3" />
 			</bean>
 		</property>
 	</bean>
@@ -31,7 +32,7 @@
 	</bean>
 
 
-	<!-- Listeners -->
+	<!-- Listeners (will be executed within a local JMS transaction)-->
 	<jms:listener-container connection-factory="connectionFactory" acknowledge="transacted">
 		<jms:listener ref="jmsMessageListener" destination="incoming.queue" />
 	</jms:listener-container>

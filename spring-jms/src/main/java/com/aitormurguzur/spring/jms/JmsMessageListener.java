@@ -17,18 +17,31 @@ import org.springframework.transaction.annotation.Transactional;
 public class JmsMessageListener implements MessageListener {
 
 	private static Logger logger = LoggerFactory.getLogger(JmsMessageListener.class);
+	private static final int MESSAGE = 1;
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	public void onMessage(Message message) {
 		try {
-			SampleMessage sampleMessage = (SampleMessage) ((ObjectMessage) message).getObject();
-			logger.info("Received message {id:{}, message:{}}", sampleMessage.getId(), sampleMessage.getMessage());
-			saveToBD(sampleMessage);
+			SampleMessage receivedMessage = (SampleMessage) ((ObjectMessage) message).getObject();
+			logger.info("Received message {id:{}, message:{}, delivery:{}}", 
+					receivedMessage.getId(), receivedMessage.getMessage(), getDeliveryMessages(message));
+			simulateMessagePreProcessException(receivedMessage);
+			saveToBD(receivedMessage);
+			// Do something. An exception HERE can cause duplicate messages in the DB
 		} catch (JMSException e) {
 			throw JmsUtils.convertJmsAccessException(e);
 		}
+	}
+	
+	private void simulateMessagePreProcessException(SampleMessage receivedMessage) {
+		if (receivedMessage.getId() == MESSAGE)
+			throw new RuntimeException("Error processing message id:" + receivedMessage.getId());
+	}
+	
+	private int getDeliveryMessages(Message message) throws JMSException {
+		return message.getIntProperty("JMSXDeliveryCount");
 	}
 
 	@Transactional
