@@ -1,4 +1,4 @@
 spring-framework
 ================
 
-Samples using Spring framework
+Samples using Spring Framework
