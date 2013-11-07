@@ -28,6 +28,6 @@ public class JmsMessageProducer {
 	}
 	
 	public void convertAndSendTopic(String destination, SampleMessage sampleMessage) {
-        jmsTopicTemplate.convertAndSend(destination, sampleMessage);
+		jmsTopicTemplate.convertAndSend(destination, sampleMessage);
 	}
 }

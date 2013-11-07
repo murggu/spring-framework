@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component("jmsSyncListener")
 public class JmsSyncListener {
 
-	 @Autowired
-     private JmsTemplate jmsTemplate;
-     
-     public SampleMessage receive() {
-             return (SampleMessage) jmsTemplate.receiveAndConvert("sync.queue");
-     }
+	@Autowired
+	private JmsTemplate jmsTemplate;
+
+	public SampleMessage receive() {
+		return (SampleMessage) jmsTemplate.receiveAndConvert("sync.queue");
+	}
 }

@@ -37,13 +37,13 @@ public class TestJmsMessaging {
 	protected JmsSyncListener jmsSyncListener;
 	
 	@Autowired
-    protected MessageRegistry messageRegistry;
+	protected MessageRegistry messageRegistry;
 	
 	@Autowired
 	protected ConnectionFactory connectionFactory;
     
-    @Autowired
-    protected Topic topic;
+	@Autowired
+	protected Topic topic;
 	
 	protected int getMessagesInQueue(String queueName) {
 		return jmsTemplate.browse(queueName, new BrowserCallback<Integer>() {

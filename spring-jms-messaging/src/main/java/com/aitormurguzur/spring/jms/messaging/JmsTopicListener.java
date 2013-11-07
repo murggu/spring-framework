@@ -23,5 +23,4 @@ public class JmsTopicListener implements MessageListener {
 			throw JmsUtils.convertJmsAccessException(e);
 		}
 	}
-
 }

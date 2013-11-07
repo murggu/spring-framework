@@ -11,12 +11,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.aitormurguzur.spring.jms.messaging.SampleMessage;
 
+/**
+ * Tests synchronous and asynchronous message reception
+ * @author amurguzur
+ *
+ */
 @ContextConfiguration(locations = { "/spring/jms-config.xml",  "/spring/app-config.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestPointToPointMessaging extends TestJmsMessaging {
 
 	private static Logger logger = LoggerFactory.getLogger(TestPointToPointMessaging.class);
 	
+	/**
+	 * Tests synchronous message reception
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void testSynchronizedMessaging() throws InterruptedException {
 		SampleMessage sampleMessage = new SampleMessage(0, "this is a message to deliver synchronously");
@@ -30,6 +39,10 @@ public class TestPointToPointMessaging extends TestJmsMessaging {
 		assertEquals(0, getMessagesInQueue(QUEUE_SYNC));
 	}
 	
+	/**
+	 * Tests asynchronous message reception
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void testAsynchronizedMessaging() throws InterruptedException {
 		SampleMessage sampleMessage = new SampleMessage(1, "this is a message to deliver asynchronously");

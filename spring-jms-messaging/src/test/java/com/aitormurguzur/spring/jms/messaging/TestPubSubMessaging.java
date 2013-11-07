@@ -17,15 +17,25 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.aitormurguzur.spring.jms.messaging.JmsTopicListener;
 import com.aitormurguzur.spring.jms.messaging.SampleMessage;
 
+/**
+ * Tests publisher/subscribe pattern
+ * @author amurguzur
+ *
+ */
 @ContextConfiguration(locations = { "/spring/jms-config.xml",  "/spring/app-config.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestPubSubMessaging extends TestJmsMessaging {
 
 	@Before
-    public void clearRegistry() {
-            messageRegistry.clear();
-    }
+	public void clearRegistry() {
+	        messageRegistry.clear();
+	}
 	
+	/**
+	 * Tests pub/sub using 4 subscribers for the same topic (i.e. one.topic)
+	 * @throws InterruptedException
+	 * @throws JMSException
+	 */
 	@Test
 	public void testAsynchronizedMessaging() throws InterruptedException, JMSException {
 		SampleMessage sampleMessage = new SampleMessage(2, "this is a topic message to deliver correctly");
@@ -44,9 +54,9 @@ public class TestPubSubMessaging extends TestJmsMessaging {
 		connection.close();
 		
 		assertEquals(4, messageRegistry.getReceivedMessages().size());
-        assertEquals(sampleMessage.getMessage(), messageRegistry.getReceivedMessages().get(0).getMessage());
-        assertEquals(sampleMessage.getMessage(), messageRegistry.getReceivedMessages().get(1).getMessage());
-        assertEquals(sampleMessage.getMessage(), messageRegistry.getReceivedMessages().get(2).getMessage());
-        assertEquals(sampleMessage.getMessage(), messageRegistry.getReceivedMessages().get(3).getMessage());
+		assertEquals(sampleMessage.getMessage(), messageRegistry.getReceivedMessages().get(0).getMessage());
+		assertEquals(sampleMessage.getMessage(), messageRegistry.getReceivedMessages().get(1).getMessage());
+		assertEquals(sampleMessage.getMessage(), messageRegistry.getReceivedMessages().get(2).getMessage());
+		assertEquals(sampleMessage.getMessage(), messageRegistry.getReceivedMessages().get(3).getMessage());
 	}
 }
