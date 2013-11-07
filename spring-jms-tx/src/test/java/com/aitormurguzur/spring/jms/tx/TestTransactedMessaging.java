@@ -44,19 +44,19 @@ public class TestTransactedMessaging extends TestJmsMessaging {
 	 * @throws InterruptedException
 	 */
 	@Test
-    public void testFailedAfterReceiveMessage() throws InterruptedException {
-        SampleMessage sampleMessage = new SampleMessage(1, "this is a message to fail after receiving");
-        jmsMessageProducer.convertAndSendMessage(QUEUE_INCOMING, sampleMessage);
-        
-        Thread.sleep(6000);
-        printResults();
-        
-        assertEquals(0, getSavedMessages());
-        assertEquals(0, getMessagesInQueue(QUEUE_INCOMING));
-        assertEquals(1, getMessagesInQueue(QUEUE_DLQ));
-        //Empty the dead letter queue
-        jmsTemplate.receive(QUEUE_DLQ);
-    }
+	public void testFailedAfterReceiveMessage() throws InterruptedException {
+	    SampleMessage sampleMessage = new SampleMessage(1, "this is a message to fail after receiving");
+	    jmsMessageProducer.convertAndSendMessage(QUEUE_INCOMING, sampleMessage);
+	    
+	    Thread.sleep(6000);
+	    printResults();
+	    
+	    assertEquals(0, getSavedMessages());
+	    assertEquals(0, getMessagesInQueue(QUEUE_INCOMING));
+	    assertEquals(1, getMessagesInQueue(QUEUE_DLQ));
+	    //Empty the dead letter queue
+	    jmsTemplate.receive(QUEUE_DLQ);
+	}
 	
 	private void printResults() {
 		logger.info("Total messages in \"incoming\" queue: {}", getMessagesInQueue(QUEUE_INCOMING));
