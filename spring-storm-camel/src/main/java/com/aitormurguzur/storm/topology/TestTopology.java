@@ -19,13 +19,20 @@ import backtype.storm.contrib.jms.bolt.JmsBolt;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Tuple;
 
+/**
+ * Test Storm topology for real-time stream processing using ActiveMQ and Camel.
+ * @author amurguzur
+ *
+ */
 public class TestTopology {
 
 	@SuppressWarnings("serial")
 	public static void main (String[] args) {
+		// Initialize Spring application context
 		ApplicationContext appConfig = new ClassPathXmlApplicationContext("app-config.xml");
-		JmsProvider jmsProvider = new SpringJmsProvider(appConfig, "jmsConnectionFactory", "notificationQueue");
 		
+		// Define JMS provider and producer behavior
+		JmsProvider jmsProvider = new SpringJmsProvider(appConfig, "jmsConnectionFactory", "notificationQueue");
 		JmsBolt jmsBolt = new JmsBolt();
 		jmsBolt.setJmsProvider(jmsProvider);
 		jmsBolt.setJmsMessageProducer(new JmsMessageProducer() {
@@ -38,14 +45,17 @@ public class TestTopology {
 			}
 		});
 		
+		// Create test topology (spouts and bolts). We can also define the number of threads, etc.
 		TopologyBuilder topologyBuilder = new TopologyBuilder();
 		topologyBuilder.setSpout("wordGeneratorSpout", new WordGeneratorSpout());
 		topologyBuilder.setBolt("wordCounterBolt", new WordCounterBolt()).shuffleGrouping("wordGeneratorSpout");
 		topologyBuilder.setBolt("jmsBolt", jmsBolt).shuffleGrouping("wordCounterBolt");
 		
+		// Topology configuration parameters
 		Config topologyConfig = new Config();
 		topologyConfig.setDebug(false);
 		
+		// Create local cluster and run topology
 		LocalCluster localCluster = new LocalCluster();
 		localCluster.submitTopology("testWordTopology", topologyConfig, topologyBuilder.createTopology());
 	}
