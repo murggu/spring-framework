@@ -45,6 +45,6 @@
 		<jms:listener ref="jmsAsyncListener" destination="one.topic"  />
 		<jms:listener ref="jmsAsyncListener" destination="one.topic"  />
 		<jms:listener ref="jmsAsyncListener" destination="one.topic"  />
-     </jms:listener-container>
+	</jms:listener-container>
 
 </beans>
