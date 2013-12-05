@@ -19,10 +19,10 @@ public class TestValueOperations extends TestCommonOperations {
 	@Test
 	public void testValueOperations() {
 		valueOperations.setKey(key, 10L);
-		assertEquals(10, (long) valueOperations.getKey(key));
+		assertEquals(10, valueOperations.getKey(key));
 		assertEquals(true, valueOperations.keyExists(key));
 		logger.debug("connections = {}", valueOperations.getKey(key));
 		
-		assertEquals(11, (long) valueOperations.incrementKey(key, (long) 1));
+		assertEquals(11, valueOperations.incrementKey(key, 1L));
 	}
 }

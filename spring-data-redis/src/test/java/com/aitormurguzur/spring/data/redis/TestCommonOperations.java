@@ -13,6 +13,9 @@ public class TestCommonOperations {
 	
 	@Autowired
 	protected RedisListOperations listOperations;
+	
+	@Autowired
+	protected RedisSetOperations setOperations;
 
 	@Before
 	public void tearDown() {

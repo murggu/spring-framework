@@ -17,19 +17,19 @@ public class TestListOperations extends TestCommonOperations {
 	private String key = "friends";
 	
 	@Test
-	public void testValueOperations() {
+	public void testListOperations() {
 		listOperations.rightPush(key, "Alice");
 		listOperations.rightPush(key, "Bob");
 		listOperations.leftPush(key, "Sam");
-		assertEquals(3, (long) listOperations.getLength(key));
+		assertEquals(3, listOperations.getLength(key));
 		logger.debug("friends:{}", listOperations.leftRange(key, 0, -1));
 		
 		listOperations.leftPop(key);
-		assertEquals(2, (long) listOperations.getLength(key));
+		assertEquals(2, listOperations.getLength(key));
 		logger.debug("friends:{}", listOperations.leftRange(key, 0, -1));
 		
 		listOperations.rightPop(key);
-		assertEquals(1, (long) listOperations.getLength(key));
+		assertEquals(1, listOperations.getLength(key));
 		logger.debug("friends:{}", listOperations.leftRange(key, 0, -1));
 	}
 }
