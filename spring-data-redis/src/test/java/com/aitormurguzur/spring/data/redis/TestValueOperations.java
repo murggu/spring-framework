@@ -14,14 +14,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class TestValueOperations extends TestCommonOperations {
 
 	private static Logger logger = LoggerFactory.getLogger(TestValueOperations.class);
+	private String key = "connections";
 	
 	@Test
 	public void testValueOperations() {
-		valueOperations.setKey("connections", 10L);
-		assertEquals(10, (long) valueOperations.getKey("connections"));
-		assertEquals(true, valueOperations.keyExists("connections"));
-		logger.debug("connections = {}", valueOperations.getKey("connections"));
 		
-		assertEquals(11, (long) valueOperations.incrementKey("connections", (long) 1));
+		valueOperations.setKey(key, 10L);
+		assertEquals(10, (long) valueOperations.getKey(key));
+		assertEquals(true, valueOperations.keyExists(key));
+		logger.debug("connections = {}", valueOperations.getKey(key));
+		
+		assertEquals(11, (long) valueOperations.incrementKey(key, (long) 1));
 	}
 }

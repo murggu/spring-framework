@@ -14,34 +14,36 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class TestStringOperations extends TestCommonOperations {
 
 	private static Logger logger = LoggerFactory.getLogger(TestStringOperations.class);
-
+	private String key = "server:name";
+	
 	@Test
 	public void testStringOperations() throws InterruptedException {
-		stringOperations.setKey("server:name", "duck");
-		assertEquals("duck", stringOperations.getKey("server:name"));
-		assertEquals(true, stringOperations.keyExists("server:name"));
-		logger.debug("server:name = {}", stringOperations.getKey("server:name"));
+	
+		stringOperations.setKey(key, "duck");
+		assertEquals("duck", stringOperations.getKey(key));
+		assertEquals(true, stringOperations.keyExists(key));
+		logger.debug("server:name = {}", stringOperations.getKey(key));
 
-		stringOperations.deleteKey("server:name");
-		assertEquals(false, stringOperations.keyExists("server:name"));
+		stringOperations.deleteKey(key);
+		assertEquals(false, stringOperations.keyExists(key));
 
-		stringOperations.setKeyIfAbsent("server:name", "bird");
-		assertEquals("bird", stringOperations.getKey("server:name"));
-		assertEquals(true, stringOperations.keyExists("server:name"));
-		logger.debug("server:name = {}", stringOperations.getKey("server:name"));
+		stringOperations.setKeyIfAbsent(key, "bird");
+		assertEquals("bird", stringOperations.getKey(key));
+		assertEquals(true, stringOperations.keyExists(key));
+		logger.debug("server:name = {}", stringOperations.getKey(key));
 
-		stringOperations.setExpire("server:name", 1000);
-		logger.debug("set ttl:{}", stringOperations.getExpire("server:name"));
+		stringOperations.setExpire(key, 1000);
+		logger.debug("set ttl:{}", stringOperations.getExpire(key));
 		Thread.sleep(1000);
-		assertEquals(false, stringOperations.keyExists("server:name"));
+		assertEquals(false, stringOperations.keyExists(key));
 
-		stringOperations.setKeyWithExpire("server:name", "lion", 2000);
-		assertEquals("lion", stringOperations.getKey("server:name"));
-		assertEquals(true, stringOperations.keyExists("server:name"));
+		stringOperations.setKeyWithExpire(key, "lion", 2000);
+		assertEquals("lion", stringOperations.getKey(key));
+		assertEquals(true, stringOperations.keyExists(key));
 
-		logger.debug("set ttl:{}", stringOperations.getExpire("server:name"));
-		logger.debug("server:name = {}", stringOperations.getKey("server:name"));
+		logger.debug("set ttl:{}", stringOperations.getExpire(key));
+		logger.debug("server:name = {}", stringOperations.getKey(key));
 		Thread.sleep(2000);
-		assertEquals(false, stringOperations.keyExists("server:name"));
+		assertEquals(false, stringOperations.keyExists(key));
 	}
 }
