@@ -18,7 +18,6 @@ public class TestStringOperations extends TestCommonOperations {
 	
 	@Test
 	public void testStringOperations() throws InterruptedException {
-	
 		stringOperations.setKey(key, "duck");
 		assertEquals("duck", stringOperations.getKey(key));
 		assertEquals(true, stringOperations.keyExists(key));

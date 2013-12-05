@@ -10,6 +10,9 @@ public class TestCommonOperations {
 	
 	@Autowired
 	protected RedisValueOperations valueOperations;
+	
+	@Autowired
+	protected RedisListOperations listOperations;
 
 	@Before
 	public void tearDown() {

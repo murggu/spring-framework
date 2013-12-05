@@ -18,7 +18,6 @@ public class TestValueOperations extends TestCommonOperations {
 	
 	@Test
 	public void testValueOperations() {
-		
 		valueOperations.setKey(key, 10L);
 		assertEquals(10, (long) valueOperations.getKey(key));
 		assertEquals(true, valueOperations.keyExists(key));
