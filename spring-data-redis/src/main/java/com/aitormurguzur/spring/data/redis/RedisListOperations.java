@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 @Component("redisListOperations")
 public class RedisListOperations extends BasicOperations<Object> {
 
-	public Long rightPush(String key, Object value) {
+	public long rightPush(String key, Object value) {
 		return redisTemplate.boundListOps(key).rightPush(value);
 	}
 	
-	public Long leftPush(String key, Object value) {
+	public long leftPush(String key, Object value) {
 		return redisTemplate.boundListOps(key).leftPush(value);
 	}
 	
@@ -31,7 +31,7 @@ public class RedisListOperations extends BasicOperations<Object> {
 		redisTemplate.boundListOps(key).trim(start, end);
 	}
 	
-	public Long getLength(String key) {
+	public long getLength(String key) {
 		return redisTemplate.boundListOps(key).size();
 	}
 }

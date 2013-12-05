@@ -22,11 +22,11 @@ public abstract class BasicOperations<V> implements Operations<String, V>{
 	}
 	
 	public boolean setExpire(String key, long ttlInMillis) {
-		return redisTemplate.boundValueOps(key).expire(ttlInMillis, TimeUnit.MILLISECONDS);
+		return redisTemplate.expire(key, ttlInMillis, TimeUnit.MILLISECONDS);
 	}
 	
 	public long getExpire(String key) {
-		return redisTemplate.boundValueOps(key).getExpire();
+		return redisTemplate.getExpire(key);
 	}
 	
 	public void tearDown() {

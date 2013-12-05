@@ -2,9 +2,6 @@ package com.aitormurguzur.spring.data.redis;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -37,9 +34,6 @@ public class TestSetOperations extends TestCommonOperations {
 		assertEquals(2, setOperations.getLength(keyB));
 		logger.debug("birdpowers:{}", setOperations.getMembers(keyB));
 		
-		List<String> keys = new ArrayList<String>();
-		keys.add(keyA);
-		keys.add(keyB);
-		logger.debug("superpowers:{}", setOperations.combineSets(keyA, keys));
+		logger.debug("superpowers:{}", setOperations.combineSets(keyA, keyB));
 	}
 }

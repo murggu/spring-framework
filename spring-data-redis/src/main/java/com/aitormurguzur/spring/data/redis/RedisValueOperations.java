@@ -21,11 +21,11 @@ public class RedisValueOperations extends BasicOperations<Long> {
 		redisTemplate.boundValueOps(key).set(value, ttlInMillis, TimeUnit.MILLISECONDS);
 	}
 	
-	public Long incrementKey(String key, Long incValue) {
+	public long incrementKey(String key, Long incValue) {
 		return redisTemplate.boundValueOps(key).increment(incValue);
 	}
 
-	public Long getKey(String key) {
+	public long getKey(String key) {
 		return redisTemplate.boundValueOps(key).get();
 	}
 }

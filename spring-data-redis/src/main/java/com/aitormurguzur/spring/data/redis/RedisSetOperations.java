@@ -1,6 +1,5 @@
 package com.aitormurguzur.spring.data.redis;
 
-import java.util.Collection;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -29,8 +28,12 @@ public class RedisSetOperations extends BasicOperations<Object> {
 		return redisTemplate.boundSetOps(key).members();
 	}
 	
-	public Set<Object> combineSets(String key, Collection<String> keys) {
-		return redisTemplate.boundSetOps(key).union(keys);
+	public Set<Object> combineSets(String keyA, String keyB) {
+		return redisTemplate.boundSetOps(keyA).union(keyB);
+	}
+	
+	public Set<Object> intersectSets(String keyA, String keyB) {
+		return redisTemplate.boundSetOps(keyA).intersect(keyB);
 	}
 	
 	public long getLength(String key) {
