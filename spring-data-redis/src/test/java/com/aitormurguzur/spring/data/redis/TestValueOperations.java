@@ -20,7 +20,7 @@ public class TestValueOperations extends TestCommonOperations {
 	public void testValueOperations() {
 		valueOperations.setKey(key, 10L);
 		assertEquals(10, valueOperations.getKey(key));
-		assertEquals(true, valueOperations.keyExists(key));
+		assertTrue(valueOperations.keyExists(key));
 		logger.debug("connections = {}", valueOperations.getKey(key));
 		
 		assertEquals(11, valueOperations.incrementKey(key, 1L));

@@ -44,5 +44,31 @@ public class RedisZSetOperations extends BasicOperations<Object> {
 		return redisTemplate.boundZSetOps(key).rank(value);
 	}
 	
-	// missing reverse, score and length
+	public Set<Object> reverseRange(String key, Long start, Long end) {
+		return redisTemplate.boundZSetOps(key).reverseRange(start, end);
+	}
+	
+	public Set<Object> reverseRangeByScore(String key, Double min, Double max) {
+		return redisTemplate.boundZSetOps(key).reverseRangeByScore(min, max);
+	}
+	
+	public Set<TypedTuple<Object>> reverseRangeByScoreWithScores(String key, Double min, Double max) {
+		return redisTemplate.boundZSetOps(key).reverseRangeByScoreWithScores(min, max);
+	}
+	
+	public Set<TypedTuple<Object>> reverseRangeByScore(String key, Long start, Long end) {
+		return redisTemplate.boundZSetOps(key).reverseRangeWithScores(start, end);
+	}
+	
+	public long reverseRange(String key, Object value) {
+		return redisTemplate.boundZSetOps(key).reverseRank(value);
+	}
+	
+	public double score(String key, Object value) {
+		return redisTemplate.boundZSetOps(key).score(value);
+	}
+	
+	public long getLength(String key) {
+		return redisTemplate.boundZSetOps(key).size();
+	}
 }

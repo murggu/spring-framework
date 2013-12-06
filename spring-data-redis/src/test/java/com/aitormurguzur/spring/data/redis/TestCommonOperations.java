@@ -16,6 +16,12 @@ public class TestCommonOperations {
 	
 	@Autowired
 	protected RedisSetOperations setOperations;
+	
+	@Autowired
+	protected RedisHashOperations hashOperations;
+	
+	@Autowired
+	protected RedisZSetOperations zSetOperations;
 
 	@Before
 	public void tearDown() {
