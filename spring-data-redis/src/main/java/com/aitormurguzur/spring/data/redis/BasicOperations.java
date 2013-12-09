@@ -7,9 +7,8 @@ import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 
-public abstract class BasicOperations<V> implements Operations<String, V>{
+public abstract class BasicOperations<V> implements Operations<String, V> {
 
-	// inject the redis template
 	@Autowired
 	protected RedisTemplate<String, V> redisTemplate;
 	
