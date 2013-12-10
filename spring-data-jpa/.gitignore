@@ -1,0 +1,16 @@
+# Eclipse
+.metadata
+.classpath
+.project
+.settings/
+.springBeans
+ 
+# Mac
+.DS_Store
+ 
+# Maven
+log/
+target/
+
+#GemFire
+vf.*
